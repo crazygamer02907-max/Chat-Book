@@ -1,0 +1,739 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBook - Connect with Friends</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                borderRadius: {
+                    lg: "var(--radius)",
+                    md: "calc(var(--radius) - 2px)",
+                    sm: "calc(var(--radius) - 4px)",
+                },
+                colors: {
+                    background: "var(--background)",
+                    foreground: "var(--foreground)",
+                    card: {
+                        DEFAULT: "var(--card)",
+                        foreground: "var(--card-foreground)",
+                    },
+                    popover: {
+                        DEFAULT: "var(--popover)",
+                        foreground: "var(--popover-foreground)",
+                    },
+                    primary: {
+                        DEFAULT: "var(--primary)",
+                        foreground: "var(--primary-foreground)",
+                    },
+                    secondary: {
+                        DEFAULT: "var(--secondary)",
+                        foreground: "var(--secondary-foreground)",
+                    },
+                    muted: {
+                        DEFAULT: "var(--muted)",
+                        foreground: "var(--muted-foreground)",
+                    },
+                    accent: {
+                        DEFAULT: "var(--accent)",
+                        foreground: "var(--accent-foreground)",
+                    },
+                    destructive: {
+                        DEFAULT: "var(--destructive)",
+                        foreground: "var(--destructive-foreground)",
+                    },
+                    border: "var(--border)",
+                    input: "var(--input)",
+                    ring: "var(--ring)",
+                    success: "var(--success)",
+                    warning: "var(--warning)",
+                },
+                fontFamily: {
+                    sans: ["Inter", "system-ui", "sans-serif"],
+                }
+            },
+        }
+    };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --background: hsl(210 40% 98%);
+            --foreground: hsl(222 84% 5%);
+            --card: hsl(0 0% 100%);
+            --card-foreground: hsl(222 84% 5%);
+            --popover: hsl(0 0% 100%);
+            --popover-foreground: hsl(222 84% 5%);
+            --primary: hsl(221 83% 53%);
+            --primary-foreground: hsl(210 40% 98%);
+            --secondary: hsl(210 40% 96%);
+            --secondary-foreground: hsl(222 47% 11%);
+            --muted: hsl(210 40% 96%);
+            --muted-foreground: hsl(215 16% 47%);
+            --accent: hsl(210 40% 96%);
+            --accent-foreground: hsl(222 47% 11%);
+            --destructive: hsl(0 85% 60%);
+            --destructive-foreground: hsl(210 40% 98%);
+            --border: hsl(214 32% 91%);
+            --input: hsl(214 32% 91%);
+            --ring: hsl(221 83% 53%);
+            --success: hsl(142 71% 45%);
+            --warning: hsl(38 92% 50%);
+            --radius: 0.75rem;
+        }
+        
+        .dark {
+            --background: hsl(220 13% 13%);
+            --foreground: hsl(210 40% 98%);
+            --card: hsl(220 13% 16%);
+            --card-foreground: hsl(210 40% 98%);
+            --popover: hsl(220 13% 16%);
+            --popover-foreground: hsl(210 40% 98%);
+            --primary: hsl(221 83% 53%);
+            --primary-foreground: hsl(210 40% 98%);
+            --secondary: hsl(217 19% 27%);
+            --secondary-foreground: hsl(210 40% 98%);
+            --muted: hsl(217 19% 27%);
+            --muted-foreground: hsl(215 20% 65%);
+            --accent: hsl(217 19% 27%);
+            --accent-foreground: hsl(210 40% 98%);
+            --destructive: hsl(0 63% 31%);
+            --destructive-foreground: hsl(210 40% 98%);
+            --border: hsl(217 19% 27%);
+            --input: hsl(217 19% 27%);
+            --ring: hsl(221 83% 53%);
+        }
+    </style>
+</head>
+<body class="bg-background text-foreground font-sans">
+    <!-- @COMPONENT: LoginScreen -->
+    <div id="loginScreen" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/20 via-background to-accent/30 p-4">
+        <div class="w-full max-w-md">
+            <!-- ChatBook Logo -->
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-2xl mb-4 shadow-lg">
+                    <i class="fas fa-comments text-2xl text-primary-foreground"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-foreground mb-2">ChatBook</h1>
+                <p class="text-muted-foreground text-sm">meet with your friends and connect to get better chat</p>
+            </div>
+
+            <!-- Login Form -->
+            <div class="bg-card rounded-2xl shadow-xl p-8 border border-border">
+                <div class="space-y-6">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="text-sm font-medium text-card-foreground mb-2 block">Username</label>
+                            <div class="relative">
+                                <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"></i>
+                                <input 
+                                    type="text" 
+                                    placeholder="Enter unique username"
+                                    class="w-full pl-10 pr-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+                                    data-mock="true"
+                                />
+                            </div>
+                            <p class="text-xs text-muted-foreground mt-1">Username must be unique and not used by others</p>
+                        </div>
+                        
+                        <div>
+                            <label class="text-sm font-medium text-card-foreground mb-2 block">Password</label>
+                            <div class="relative">
+                                <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"></i>
+                                <input 
+                                    type="password" 
+                                    placeholder="Enter secure password"
+                                    class="w-full pl-10 pr-12 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+                                    data-mock="true"
+                                />
+                                <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground">
+                                    <i class="fas fa-eye text-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <button 
+                            onclick="showChatInterface()"
+                            class="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-3 rounded-lg transition-all duration-200 transform hover:scale-[1.02]"
+                            data-event="click:handleLogin"
+                        >
+                            Sign In
+                        </button>
+                        
+                        <div class="text-center">
+                            <span class="text-sm text-muted-foreground">Don't have an account? </span>
+                            <button onclick="showRegisterForm()" class="text-sm text-primary hover:underline font-medium">
+                                Create Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Register Form (Hidden by default) -->
+            <div id="registerForm" class="bg-card rounded-2xl shadow-xl p-8 border border-border mt-6 hidden">
+                <h3 class="text-xl font-semibold text-card-foreground mb-6 text-center">Create New Account</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-sm font-medium text-card-foreground mb-2 block">Full Name</label>
+                        <input 
+                            type="text" 
+                            placeholder="Enter your full name"
+                            class="w-full px-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
+                            data-mock="true"
+                        />
+                    </div>
+                    
+                    <div>
+                        <label class="text-sm font-medium text-card-foreground mb-2 block">Username</label>
+                        <div class="relative">
+                            <input 
+                                type="text" 
+                                placeholder="Choose unique username"
+                                class="w-full px-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
+                                data-mock="true"
+                            />
+                            <div class="absolute right-3 top-1/2 transform -translate-y-1/2">
+                                <!-- @FUNCTIONALITY: Real-time username availability check -->
+                                <i class="fas fa-check text-success text-sm hidden" data-implementation="Show when username is available"></i>
+                                <i class="fas fa-times text-destructive text-sm hidden" data-implementation="Show when username is taken"></i>
+                            </div>
+                        </div>
+                        <p class="text-xs text-muted-foreground mt-1">We'll check if this username is available</p>
+                    </div>
+                    
+                    <div>
+                        <label class="text-sm font-medium text-card-foreground mb-2 block">Password</label>
+                        <input 
+                            type="password" 
+                            placeholder="Create secure password"
+                            class="w-full px-4 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
+                            data-mock="true"
+                        />
+                        <div class="mt-2 space-y-1">
+                            <div class="flex items-center space-x-2 text-xs">
+                                <i class="fas fa-check text-success"></i>
+                                <span class="text-muted-foreground">At least 8 characters</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-xs">
+                                <i class="fas fa-times text-muted-foreground"></i>
+                                <span class="text-muted-foreground">Contains uppercase and lowercase</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-3 pt-2">
+                        <button 
+                            class="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-3 rounded-lg transition-all duration-200"
+                            data-event="click:handleRegister"
+                        >
+                            Create Account
+                        </button>
+                        
+                        <button 
+                            onclick="hideRegisterForm()"
+                            class="w-full bg-secondary hover:bg-secondary/80 text-secondary-foreground font-medium py-3 rounded-lg transition-all duration-200"
+                        >
+                            Back to Sign In
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: LoginScreen -->
+
+    <!-- @COMPONENT: ChatInterface -->
+    <div id="chatInterface" class="hidden min-h-screen bg-background">
+        <!-- Header -->
+        <header class="bg-card border-b border-border px-4 py-3 shadow-sm">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                            <i class="fas fa-comments text-primary-foreground text-sm"></i>
+                        </div>
+                        <h1 class="text-xl font-bold text-foreground">ChatBook</h1>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Online Status -->
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-success rounded-full"></div>
+                        <span class="text-sm text-muted-foreground" data-bind="onlineCount">12 online</span>
+                    </div>
+                    
+                    <!-- User Menu -->
+                    <div class="relative">
+                        <button onclick="toggleUserMenu()" class="flex items-center space-x-2 hover:bg-accent rounded-lg px-3 py-2 transition-colors">
+                            <!-- User avatar placeholder showing current user profile -->
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40" alt="User Avatar" class="w-8 h-8 rounded-full" data-bind="currentUser.avatar" />
+                            <span class="text-sm font-medium" data-bind="currentUser.name" data-mock="true">John Doe</span>
+                            <i class="fas fa-chevron-down text-xs text-muted-foreground"></i>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div id="userMenu" class="hidden absolute right-0 top-full mt-2 w-48 bg-popover border border-border rounded-lg shadow-lg z-50">
+                            <div class="py-2">
+                                <button onclick="showProfile()" class="w-full text-left px-4 py-2 text-sm hover:bg-accent flex items-center space-x-2">
+                                    <i class="fas fa-user text-muted-foreground"></i>
+                                    <span>View Profile</span>
+                                </button>
+                                <button class="w-full text-left px-4 py-2 text-sm hover:bg-accent flex items-center space-x-2">
+                                    <i class="fas fa-cog text-muted-foreground"></i>
+                                    <span>Settings</span>
+                                </button>
+                                <hr class="my-2 border-border">
+                                <button onclick="logout()" class="w-full text-left px-4 py-2 text-sm hover:bg-accent text-destructive flex items-center space-x-2">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Sign Out</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex h-[calc(100vh-73px)]">
+            <!-- Sidebar -->
+            <div class="w-80 bg-card border-r border-border flex flex-col">
+                <!-- Search -->
+                <div class="p-4 border-b border-border">
+                    <div class="relative">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground text-sm"></i>
+                        <input 
+                            type="text" 
+                            placeholder="Search friends..."
+                            class="w-full pl-10 pr-4 py-2 bg-input border border-border rounded-lg text-sm focus:ring-2 focus:ring-ring focus:border-transparent"
+                            data-mock="true"
+                        />
+                    </div>
+                </div>
+
+                <!-- Active Users List -->
+                <div class="flex-1 overflow-y-auto">
+                    <div class="p-4">
+                        <h3 class="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">Active Friends</h3>
+                        
+                        <!-- @MAP: activeUsers.map(user => ( -->
+                        <div class="space-y-2">
+                            <!-- User Item 1 -->
+                            <div class="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent cursor-pointer transition-colors group" onclick="selectUser('sarah')">
+                                <div class="relative">
+                                    <!-- Profile photo of a young woman with curly hair -->
+                                    <img src="https://pixabay.com/get/g15ee1d4413da063b38bd60e10c0be235f3e9a91356d8f55f55932467b36e6f204b42c70bc917527d9ebd6130569fe1e2e2e057605efc3f2448b2725792bdd746_1280.jpg" alt="Sarah's Avatar" class="w-10 h-10 rounded-full" />
+                                    <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-success border-2 border-card rounded-full"></div>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-card-foreground truncate" data-bind="user.name">Sarah Johnson</p>
+                                    <p class="text-xs text-muted-foreground truncate" data-bind="user.lastMessage">Hey! How's your day going?</p>
+                                </div>
+                                <div class="flex flex-col items-end space-y-1">
+                                    <span class="text-xs text-muted-foreground" data-bind="user.lastSeen">2m</span>
+                                    <div class="w-2 h-2 bg-primary rounded-full" data-implementation="Show for unread messages"></div>
+                                </div>
+                            </div>
+
+                            <!-- User Item 2 -->
+                            <div class="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent cursor-pointer transition-colors group" onclick="selectUser('mike')">
+                                <div class="relative">
+                                    <!-- Profile photo of a man with beard -->
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40" alt="Mike's Avatar" class="w-10 h-10 rounded-full" />
+                                    <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-success border-2 border-card rounded-full"></div>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-card-foreground truncate">Mike Chen</p>
+                                    <p class="text-xs text-muted-foreground truncate">Thanks for the help earlier!</p>
+                                </div>
+                                <div class="flex flex-col items-end space-y-1">
+                                    <span class="text-xs text-muted-foreground">5m</span>
+                                </div>
+                            </div>
+
+                            <!-- User Item 3 -->
+                            <div class="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent cursor-pointer transition-colors group" onclick="selectUser('emma')">
+                                <div class="relative">
+                                    <!-- Profile photo of a woman with short blonde hair -->
+                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40" alt="Emma's Avatar" class="w-10 h-10 rounded-full" />
+                                    <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-muted border-2 border-card rounded-full"></div>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-card-foreground truncate">Emma Wilson</p>
+                                    <p class="text-xs text-muted-foreground truncate">See you tomorrow at the meeting</p>
+                                </div>
+                                <div class="flex flex-col items-end space-y-1">
+                                    <span class="text-xs text-muted-foreground">1h</span>
+                                </div>
+                            </div>
+
+                            <!-- User Item 4 -->
+                            <div class="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent cursor-pointer transition-colors group" onclick="selectUser('alex')">
+                                <div class="relative">
+                                    <!-- Profile photo of a young man with glasses -->
+                                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40" alt="Alex's Avatar" class="w-10 h-10 rounded-full" />
+                                    <div class="absolute -bottom-1 -right-1 w-3 h-3 bg-success border-2 border-card rounded-full"></div>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-card-foreground truncate">Alex Rodriguez</p>
+                                    <p class="text-xs text-muted-foreground truncate">Just shared some photos from the trip</p>
+                                </div>
+                                <div class="flex flex-col items-end space-y-1">
+                                    <span class="text-xs text-muted-foreground">3h</span>
+                                    <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- @END_MAP -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Chat Area -->
+            <div class="flex-1 flex flex-col">
+                <!-- Chat Header -->
+                <div class="bg-card border-b border-border px-6 py-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <img src="https://pixabay.com/get/gbbc64a6ef4bdffdc854b77c854b68638734dcf30fa40b46b91fc872f7a314943de3e286d43c69fa7409642c99f1bab438a3dab0c4accc7ab08348ca68c491340_1280.jpg" alt="Active Chat User" class="w-12 h-12 rounded-full" data-bind="selectedUser.avatar" />
+                            <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-success border-2 border-card rounded-full"></div>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-semibold text-card-foreground" data-bind="selectedUser.name" data-mock="true">Sarah Johnson</h2>
+                            <p class="text-sm text-muted-foreground" data-bind="selectedUser.status">Active now</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <button class="p-2 hover:bg-accent rounded-lg transition-colors" data-implementation="Voice call functionality">
+                            <i class="fas fa-phone text-muted-foreground"></i>
+                        </button>
+                        <button class="p-2 hover:bg-accent rounded-lg transition-colors" data-implementation="Video call functionality">
+                            <i class="fas fa-video text-muted-foreground"></i>
+                        </button>
+                        <button onclick="showSelectedUserProfile()" class="p-2 hover:bg-accent rounded-lg transition-colors">
+                            <i class="fas fa-info-circle text-muted-foreground"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages Area -->
+                <div class="flex-1 overflow-y-auto p-6 space-y-4" id="messagesContainer">
+                    <!-- @MAP: messages.map(message => ( -->
+                    
+                    <!-- Received Message -->
+                    <div class="flex items-start space-x-3">
+                        <img src="https://pixabay.com/get/gc38535cc71b968ffa5785573fa8a218543e1a20333561096c19b9ba36b10fb9e87e8c1079a4fcd14a5e2078ed2963d6e50688cce7109f65f79ef4163e02ced3a_1280.jpg" alt="Sarah" class="w-8 h-8 rounded-full flex-shrink-0" />
+                        <div class="flex-1">
+                            <div class="bg-secondary rounded-2xl rounded-tl-sm px-4 py-3 max-w-md">
+                                <p class="text-sm text-secondary-foreground" data-bind="message.content">Hey! How's your day going? I was thinking we could meet up later to work on our project.</p>
+                            </div>
+                            <div class="flex items-center space-x-2 mt-1">
+                                <span class="text-xs text-muted-foreground" data-bind="message.timestamp">2:34 PM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sent Message -->
+                    <div class="flex items-start space-x-3 justify-end">
+                        <div class="flex-1 flex flex-col items-end">
+                            <div class="bg-primary rounded-2xl rounded-tr-sm px-4 py-3 max-w-md">
+                                <p class="text-sm text-primary-foreground">That sounds great! I'm free after 4 PM. Should we meet at the library or somewhere else?</p>
+                            </div>
+                            <div class="flex items-center space-x-2 mt-1">
+                                <span class="text-xs text-muted-foreground">2:35 PM</span>
+                                <i class="fas fa-check-double text-xs text-primary" data-implementation="Show delivery status"></i>
+                            </div>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=32&h=32" alt="You" class="w-8 h-8 rounded-full flex-shrink-0" />
+                    </div>
+
+                    <!-- Received Message -->
+                    <div class="flex items-start space-x-3">
+                        <img src="https://pixabay.com/get/gc38535cc71b968ffa5785573fa8a218543e1a20333561096c19b9ba36b10fb9e87e8c1079a4fcd14a5e2078ed2963d6e50688cce7109f65f79ef4163e02ced3a_1280.jpg" alt="Sarah" class="w-8 h-8 rounded-full flex-shrink-0" />
+                        <div class="flex-1">
+                            <div class="bg-secondary rounded-2xl rounded-tl-sm px-4 py-3 max-w-md">
+                                <p class="text-sm text-secondary-foreground">Library works perfect! I'll grab us a study room. See you at 4!</p>
+                            </div>
+                            <div class="flex items-center space-x-2 mt-1">
+                                <span class="text-xs text-muted-foreground">2:36 PM</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Typing Indicator -->
+                    <div class="flex items-start space-x-3" data-implementation="Show when user is typing">
+                        <img src="https://pixabay.com/get/g407ae4bd489312365bc21f026cc84b75dbb2adfdf691eb5fcc4b892baaf4e4adeb7c0534e784532e53b6b72b6cd275a070fa564b66403d22e150385b179fd70a_1280.jpg" alt="Sarah" class="w-8 h-8 rounded-full flex-shrink-0" />
+                        <div class="bg-secondary rounded-2xl rounded-tl-sm px-4 py-3">
+                            <div class="flex space-x-1">
+                                <div class="w-2 h-2 bg-muted-foreground rounded-full animate-pulse"></div>
+                                <div class="w-2 h-2 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+                                <div class="w-2 h-2 bg-muted-foreground rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- @END_MAP -->
+                </div>
+
+                <!-- Message Input -->
+                <div class="bg-card border-t border-border px-6 py-4">
+                    <div class="flex items-end space-x-3">
+                        <button class="p-2 hover:bg-accent rounded-lg transition-colors flex-shrink-0" data-implementation="File attachment functionality">
+                            <i class="fas fa-paperclip text-muted-foreground"></i>
+                        </button>
+                        
+                        <div class="flex-1 relative">
+                            <textarea 
+                                placeholder="Type your message..."
+                                rows="1"
+                                class="w-full resize-none bg-input border border-border rounded-2xl px-4 py-3 pr-12 focus:ring-2 focus:ring-ring focus:border-transparent text-sm max-h-32"
+                                data-mock="true"
+                                data-implementation="Auto-expand on content and implement send on enter"
+                            ></textarea>
+                            <button class="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 hover:bg-accent rounded-lg transition-colors">
+                                <i class="fas fa-smile text-muted-foreground" data-implementation="Emoji picker"></i>
+                            </button>
+                        </div>
+                        
+                        <button class="bg-primary hover:bg-primary/90 text-primary-foreground p-3 rounded-xl transition-all duration-200 flex-shrink-0" data-event="click:sendMessage">
+                            <i class="fas fa-paper-plane text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: ChatInterface -->
+
+    <!-- @COMPONENT: ProfileModal -->
+    <div id="profileModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-card rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="relative p-6 border-b border-border">
+                <h2 class="text-xl font-semibold text-card-foreground text-center">Profile</h2>
+                <button onclick="closeProfile()" class="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 hover:bg-accent rounded-lg transition-colors">
+                    <i class="fas fa-times text-muted-foreground"></i>
+                </button>
+            </div>
+
+            <!-- Profile Content -->
+            <div class="p-6 space-y-6">
+                <!-- Avatar Section -->
+                <div class="text-center">
+                    <div class="relative inline-block">
+                        <!-- Profile photo of the current user -->
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&h=120" alt="Profile Avatar" class="w-24 h-24 rounded-full mx-auto border-4 border-border" data-bind="currentUser.avatar" />
+                        <button class="absolute bottom-0 right-0 bg-primary text-primary-foreground p-2 rounded-full shadow-lg hover:bg-primary/90 transition-colors">
+                            <i class="fas fa-camera text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-lg font-semibold text-card-foreground" data-bind="currentUser.name" data-mock="true">John Doe</h3>
+                        <p class="text-sm text-muted-foreground" data-bind="currentUser.username">@johndoe</p>
+                    </div>
+                </div>
+
+                <!-- Profile Info -->
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-sm font-medium text-card-foreground mb-2 block">Display Name</label>
+                        <input 
+                            type="text" 
+                            value="John Doe"
+                            class="w-full px-3 py-2 bg-input border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent text-sm"
+                            data-bind="currentUser.name"
+                            data-mock="true"
+                        />
+                    </div>
+                    
+                    <div>
+                        <label class="text-sm font-medium text-card-foreground mb-2 block">Username</label>
+                        <input 
+                            type="text" 
+                            value="johndoe"
+                            class="w-full px-3 py-2 bg-input border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent text-sm"
+                            data-bind="currentUser.username"
+                            data-mock="true"
+                        />
+                        <p class="text-xs text-muted-foreground mt-1">This is your unique identifier</p>
+                    </div>
+                    
+                    <div>
+                        <label class="text-sm font-medium text-card-foreground mb-2 block">Status Message</label>
+                        <input 
+                            type="text" 
+                            placeholder="What's on your mind?"
+                            value="Studying for finals 📚"
+                            class="w-full px-3 py-2 bg-input border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent text-sm"
+                            data-bind="currentUser.status"
+                            data-mock="true"
+                        />
+                    </div>
+                </div>
+
+                <!-- Account Stats -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-muted rounded-lg p-4 text-center">
+                        <p class="text-2xl font-bold text-foreground" data-bind="userStats.messagesSent">1,247</p>
+                        <p class="text-sm text-muted-foreground">Messages Sent</p>
+                    </div>
+                    <div class="bg-muted rounded-lg p-4 text-center">
+                        <p class="text-2xl font-bold text-foreground" data-bind="userStats.friendsCount">23</p>
+                        <p class="text-sm text-muted-foreground">Friends</p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="space-y-3">
+                    <button class="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-3 rounded-lg transition-colors" data-event="click:saveProfile">
+                        Save Changes
+                    </button>
+                    <button class="w-full bg-secondary hover:bg-secondary/80 text-secondary-foreground font-medium py-3 rounded-lg transition-colors">
+                        Change Password
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: ProfileModal -->
+
+    <!-- @COMPONENT: SelectedUserProfileModal -->
+    <div id="selectedUserProfileModal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-card rounded-2xl shadow-2xl w-full max-w-md">
+            <!-- Modal Header -->
+            <div class="relative p-6 border-b border-border">
+                <h2 class="text-xl font-semibold text-card-foreground text-center">Friend Profile</h2>
+                <button onclick="closeSelectedUserProfile()" class="absolute right-4 top-1/2 transform -translate-y-1/2 p-2 hover:bg-accent rounded-lg transition-colors">
+                    <i class="fas fa-times text-muted-foreground"></i>
+                </button>
+            </div>
+
+            <!-- Profile Content -->
+            <div class="p-6 space-y-6">
+                <!-- Avatar and Info -->
+                <div class="text-center">
+                    <img src="https://pixabay.com/get/ga2b7056feb78f15706852099e9a978b09606f6e5976c8657bb471e2208f08e3f1a618a9b41fc1310602ed83f1c060a376a3b5a3234e6793a14019df708ab352c_1280.jpg" alt="Friend Avatar" class="w-24 h-24 rounded-full mx-auto border-4 border-border" data-bind="selectedUser.avatar" />
+                    <div class="mt-4">
+                        <h3 class="text-lg font-semibold text-card-foreground" data-bind="selectedUser.name" data-mock="true">Sarah Johnson</h3>
+                        <p class="text-sm text-muted-foreground" data-bind="selectedUser.username">@sarahj</p>
+                        <div class="flex items-center justify-center space-x-2 mt-2">
+                            <div class="w-2 h-2 bg-success rounded-full"></div>
+                            <span class="text-sm text-muted-foreground">Online</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status -->
+                <div class="bg-muted rounded-lg p-4">
+                    <p class="text-sm text-center text-muted-foreground" data-bind="selectedUser.statusMessage">"Working on my design portfolio 🎨"</p>
+                </div>
+
+                <!-- Actions -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button class="flex items-center justify-center space-x-2 bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-3 rounded-lg transition-colors">
+                        <i class="fas fa-comment text-sm"></i>
+                        <span>Message</span>
+                    </button>
+                    <button class="flex items-center justify-center space-x-2 bg-secondary hover:bg-secondary/80 text-secondary-foreground font-medium py-3 rounded-lg transition-colors">
+                        <i class="fas fa-phone text-sm"></i>
+                        <span>Call</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: SelectedUserProfileModal -->
+
+    <!-- @STATE: currentView:string = 'login' -->
+    <!-- @STATE: selectedUser:object = null -->
+    <!-- @STATE: currentUser:object = null -->
+    <!-- @STATE: messages:array = [] -->
+
+    <script>
+        // TODO: Implement real authentication, user management, and real-time messaging
+        
+        (function() {
+            // Mock data for demonstration
+            let currentView = 'login';
+            let selectedUser = null;
+            
+            // UI state management functions
+            window.showChatInterface = function() {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('chatInterface').classList.remove('hidden');
+                currentView = 'chat';
+            };
+            
+            window.showRegisterForm = function() {
+                document.getElementById('registerForm').classList.remove('hidden');
+            };
+            
+            window.hideRegisterForm = function() {
+                document.getElementById('registerForm').classList.add('hidden');
+            };
+            
+            window.selectUser = function(userId) {
+                // TODO: Load user data and chat history
+                console.log('Selected user:', userId);
+            };
+            
+            window.toggleUserMenu = function() {
+                const menu = document.getElementById('userMenu');
+                menu.classList.toggle('hidden');
+            };
+            
+            window.showProfile = function() {
+                document.getElementById('profileModal').classList.remove('hidden');
+                document.getElementById('userMenu').classList.add('hidden');
+            };
+            
+            window.closeProfile = function() {
+                document.getElementById('profileModal').classList.add('hidden');
+            };
+            
+            window.showSelectedUserProfile = function() {
+                document.getElementById('selectedUserProfileModal').classList.remove('hidden');
+            };
+            
+            window.closeSelectedUserProfile = function() {
+                document.getElementById('selectedUserProfileModal').classList.add('hidden');
+            };
+            
+            window.logout = function() {
+                document.getElementById('chatInterface').classList.add('hidden');
+                document.getElementById('loginScreen').classList.remove('hidden');
+                document.getElementById('userMenu').classList.add('hidden');
+                currentView = 'login';
+            };
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(event) {
+                const userMenu = document.getElementById('userMenu');
+                const userMenuButton = event.target.closest('button[onclick="toggleUserMenu()"]');
+                
+                if (!userMenuButton && !userMenu.contains(event.target)) {
+                    userMenu.classList.add('hidden');
+                }
+            });
+            
+            // Auto-scroll messages to bottom
+            function scrollToBottom() {
+                const container = document.getElementById('messagesContainer');
+                if (container) {
+                    container.scrollTop = container.scrollHeight;
+                }
+            }
+            
+            // Initialize
+            scrollToBottom();
+        })();
+    </script>
+</body>
+</html>

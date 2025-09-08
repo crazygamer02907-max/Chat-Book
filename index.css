@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(210, 40%, 98%);
+  --foreground: hsl(222, 84%, 5%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(222, 84%, 5%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(222, 84%, 5%);
+  --primary: hsl(221, 83%, 53%);
+  --primary-foreground: hsl(210, 40%, 98%);
+  --secondary: hsl(210, 40%, 96%);
+  --secondary-foreground: hsl(222, 47%, 11%);
+  --muted: hsl(210, 40%, 96%);
+  --muted-foreground: hsl(215, 16%, 47%);
+  --accent: hsl(210, 40%, 96%);
+  --accent-foreground: hsl(222, 47%, 11%);
+  --destructive: hsl(0, 85%, 60%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --border: hsl(214, 32%, 91%);
+  --input: hsl(214, 32%, 91%);
+  --ring: hsl(221, 83%, 53%);
+  --success: hsl(142, 71%, 45%);
+  --warning: hsl(38, 92%, 50%);
+  --radius: 0.75rem;
+  --font-sans: Inter, system-ui, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: Menlo, monospace;
+}
+
+.dark {
+  --background: hsl(220, 13%, 13%);
+  --foreground: hsl(210, 40%, 98%);
+  --card: hsl(220, 13%, 16%);
+  --card-foreground: hsl(210, 40%, 98%);
+  --popover: hsl(220, 13%, 16%);
+  --popover-foreground: hsl(210, 40%, 98%);
+  --primary: hsl(221, 83%, 53%);
+  --primary-foreground: hsl(210, 40%, 98%);
+  --secondary: hsl(217, 19%, 27%);
+  --secondary-foreground: hsl(210, 40%, 98%);
+  --muted: hsl(217, 19%, 27%);
+  --muted-foreground: hsl(215, 20%, 65%);
+  --accent: hsl(217, 19%, 27%);
+  --accent-foreground: hsl(210, 40%, 98%);
+  --destructive: hsl(0, 63%, 31%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --border: hsl(217, 19%, 27%);
+  --input: hsl(217, 19%, 27%);
+  --ring: hsl(221, 83%, 53%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+  }
+}
+
+@layer components {
+  .gradient-bg {
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.2) 0%, hsl(var(--background)) 50%, hsl(var(--accent) / 0.3) 100%);
+  }
+}
+
+/* Mobile-optimized chat styles */
+@media (max-width: 768px) {
+  /* Increase touch target sizes for mobile */
+  .chat-mobile-input {
+    font-size: 16px; /* Prevents zoom on iOS */
+    min-height: 44px; /* Apple's recommended minimum touch target */
+  }
+  
+  .chat-mobile-button {
+    min-width: 44px;
+    min-height: 44px;
+    touch-action: manipulation; /* Prevents double-tap zoom */
+  }
+  
+  /* Better scrolling on mobile */
+  .chat-messages {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  /* Fix viewport height on mobile browsers */
+  .chat-container {
+    height: 100dvh; /* Dynamic viewport height */
+    height: 100vh; /* Fallback */
+  }
+  
+  /* Prevent textarea zoom on focus */
+  textarea {
+    font-size: 16px;
+  }
+  
+  /* Better button shadows on mobile */
+  .mobile-send-button {
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+    backdrop-filter: blur(8px);
+  }
+  
+  .mobile-send-button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+  
+  /* Media button animations */
+  .media-button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+}
